@@ -4,23 +4,35 @@
 
 from odoo import api, fields, models
 
+try:
+    from odoo.addons.phone_validation.tools.phone_validation import phone_format
+except ImportError:
+
+    def phone_format(
+        number,
+        country_code,
+        country_phone_code,
+        force_format="INTERNATIONAL",
+        raise_exception=True,
+    ):
+        return number
+
 
 class CrmPhonecall(models.Model):
     _name = "crm.phonecall"
     _description = "Phone Call"
-    _inherit = ["mail.thread", "mail.activity.mixin", "phone.validation.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "id desc"
 
     # Restore the object that existed in v8
     # and doesn't exist in v9 community any more
     name = fields.Char(string="Call Summary", required=True, tracking=True)
     date = fields.Datetime(
-        string="Date",
         tracking=True,
         copy=False,
         default=lambda self: fields.Datetime.now(),
     )
-    description = fields.Text(string="Description", copy=False)
+    description = fields.Text(copy=False)
     company_id = fields.Many2one(
         "res.company", string="Company", default=lambda self: self.env.company
     )
@@ -43,7 +55,6 @@ class CrmPhonecall(models.Model):
     partner_mobile = fields.Char(string="Mobile")
     priority = fields.Selection(
         [("0", "Low"), ("1", "Normal"), ("2", "High")],
-        string="Priority",
         tracking=True,
         default="1",
     )
@@ -76,6 +87,21 @@ class CrmPhonecall(models.Model):
         default="outbound",
     )
 
+    def _phone_format(
+        self,
+        number,
+        country=None,
+    ):
+        if not number or not country:
+            return number
+        new_number = phone_format(
+            number,
+            country.code if country else None,
+            country.phone_code if country else None,
+            force_format="INTERNATIONAL",
+        )
+        return new_number if new_number else number
+
     @api.onchange("partner_id")
     def onchange_partner_id(self):
         if self.partner_id:
@@ -93,12 +119,14 @@ class CrmPhonecall(models.Model):
     @api.onchange("partner_phone")
     def onchange_partner_phone(self):
         if self.partner_phone:
-            self.partner_phone = self.phone_format(self.partner_phone)
+            country = self.partner_id.country_id or self.env.company.country_id
+            self.partner_phone = self._phone_format(self.partner_phone, country)
 
     @api.onchange("partner_mobile")
     def onchange_partner_mobile(self):
         if self.partner_mobile:
-            self.partner_mobile = self.phone_format(self.partner_mobile)
+            country = self.partner_id.country_id or self.env.company.country_id
+            self.partner_mobile = self._phone_format(self.partner_mobile, country)
 
     def schedule_another_call(self):
         self.ensure_one()
