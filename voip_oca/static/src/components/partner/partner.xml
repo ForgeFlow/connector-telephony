@@ -21,10 +21,12 @@
             <t t-else="">
                 <span class="fw-bolder">No contact info</span>
             </t>
-            <button class="btn text-success" t-on-click="onCall">
-                <i class="fa fa-phone" />
-                <span class="mt-2 mx-2" t-esc="phoneNumber" />
-            </button>
+            <t t-if="phoneNumber">
+                <button class="btn text-success" t-on-click="onCall">
+                    <i class="fa fa-phone" />
+                    <span class="mt-2 mx-2" t-esc="phoneNumber" />
+                </button>
+            </t>
             <span class="mt-2 small text-muted" t-if="props.call">
                 <i class="px-2" t-att-class="props.call.iconTypeCall" />
                 <t t-esc="props.call.startDate" />

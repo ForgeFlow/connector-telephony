@@ -31,7 +31,8 @@ export class Numpad extends Component {
     }
 
     onNumpadValue(ev) {
-        if (ev.key === "Enter") {
+        const {value} = this.voip.numpad;
+        if (ev.key === "Enter" && value.length > 0) {
             this.props.onCall();
             return;
         }

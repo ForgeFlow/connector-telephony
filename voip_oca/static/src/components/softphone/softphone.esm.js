@@ -59,7 +59,7 @@ export class VoipOCASoftphone extends Component {
         this.voip.handleFold();
     }
     onCall() {
-        if (this.voip.numpadTab) {
+        if (this.voip.numpadTab && this.voip.numpad.value) {
             return this.agent.call({number: this.voip.numpad.value});
         }
         if (this.voip.partner) {

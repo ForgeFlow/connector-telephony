@@ -57,8 +57,8 @@ export class Partner extends Component {
             target: "new",
             context: {
                 default_model: this.model,
-                default_res_ids: [this.resId],
-                default_partner_ids: [this.resId],
+                default_res_ids: this.resId ? [this.resId] : false,
+                default_partner_ids: this.resId ? [this.resId] : false,
                 default_composition_mode: "comment",
                 default_use_template: true,
                 default_subject: "Comment",

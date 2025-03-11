@@ -49,6 +49,7 @@ export class VoipOCA {
                 direction: "none",
             },
         };
+        this.user = env.services.user;
         // We will make this service reactive,
         // this way we will hanble the changes on the component
         return reactive(this);
@@ -106,10 +107,13 @@ export class VoipOCA {
     get activities() {
         return Object.values(this.store.Activity.records).filter(
             (activity) =>
-                !this.searchValue ||
-                [activity.summary, activity.resName, activity.main_partner].some((x) =>
-                    matchString(x, this.searchValue)
-                )
+                (!this.searchValue ||
+                    [activity.summary, activity.resName, activity.main_partner].some(
+                        (x) => matchString(x, this.searchValue)
+                    )) &&
+                new Date(activity.date_deadline) <= new Date() &&
+                activity.activity_category === "phonecall"
+            // TODO: The activity user_id must be the same as this.user.userId
         );
     }
 
