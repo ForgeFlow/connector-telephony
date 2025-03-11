@@ -4,7 +4,7 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
 
-import {Component, onWillStart} from "@odoo/owl";
+import {Component, onMounted} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
@@ -13,7 +13,7 @@ export class CallList extends Component {
     setup() {
         super.setup();
         this.voip = useService("voip_oca");
-        onWillStart(() => this.voip.searchCalls());
+        onMounted(() => this.voip.searchCalls());
     }
 
     onClick(call) {
@@ -30,7 +30,6 @@ registry.category("voip_elements").add("call_list", {
     input: "calls",
     search: (voip, value) => voip.searchCalls(value),
     call: (voip) => {
-        console.log(voip.calls[0]);
         if (voip.calls) {
             voip.open({call: voip.calls[0], partner: voip.calls[0]});
         }

@@ -35,6 +35,7 @@ QUnit.test("Check Activities", async () => {
             res_model: "res.partner",
             user_id: pyEnv.currentUserId,
             main_partner_id: partnerId1,
+            activity_category: "phonecall",
         },
         {
             activity_type_id: activityTypeId,
@@ -43,6 +44,7 @@ QUnit.test("Check Activities", async () => {
             res_model: "res.partner",
             user_id: pyEnv.currentUserId,
             main_partner_id: partnerId2,
+            activity_category: "phonecall",
         },
     ]);
     start();

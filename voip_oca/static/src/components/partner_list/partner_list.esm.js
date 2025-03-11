@@ -4,7 +4,7 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
 
-import {Component, onWillStart} from "@odoo/owl";
+import {Component, onMounted} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
@@ -13,7 +13,7 @@ export class PartnerList extends Component {
     setup() {
         super.setup();
         this.voip = useService("voip_oca");
-        onWillStart(() => this.voip.searchPartners());
+        onMounted(() => this.voip.searchPartners());
     }
 
     onClick(partner) {

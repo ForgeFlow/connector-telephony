@@ -30,6 +30,7 @@ export class VoipOCA {
         Object.assign(this, session.voip);
         delete session.voip;
         this.selectedTab = "activity_list";
+        this.uid = session.uid;
         this.store = services["mail.store"];
         this.numpadTab = false;
         this.orm = services.orm;
@@ -112,8 +113,8 @@ export class VoipOCA {
                         (x) => matchString(x, this.searchValue)
                     )) &&
                 new Date(activity.date_deadline) <= new Date() &&
-                activity.activity_category === "phonecall"
-            // TODO: The activity user_id must be the same as this.user.userId
+                activity.activity_category === "phonecall" &&
+                activity.user_id[0] === this.uid
         );
     }
 

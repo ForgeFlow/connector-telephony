@@ -54,9 +54,9 @@ Configuration
 Create the PBX Connection
 -------------------------
 
-- Access in Debug mode.
-- Go to ``Settings > Technical > Discuss > PBX Servers``.
-- Create a PBX server and define the domain name and websocket link.
+-  Access in Debug mode.
+-  Go to ``Settings > Technical > Discuss > PBX Servers``.
+-  Create a PBX server and define the domain name and websocket link.
 
 You can set it as ``Test`` or ``Production``. Test environment will
 never contact the PBX server.
@@ -160,13 +160,13 @@ Known issues / Roadmap
 
 The following options are interesting but are not implemented right now:
 
-- Allow to enable or disable the VOIP as a user (Login / Logout)
-- Create a call system where the calls are done automatically according
-  to tasks
+-  Allow to enable or disable the VOIP as a user (Login / Logout)
+-  Create a call system where the calls are done automatically according
+   to tasks
 
 The following options will be done before release:
 
-- Show the status of the VOIP connection on the header
+-  Show the status of the VOIP connection on the header
 
 Bug Tracker
 ===========
@@ -189,23 +189,23 @@ Authors
 Contributors
 ------------
 
-- `Dixmit <https://www.dixmit.com>`__:
+-  `Dixmit <https://www.dixmit.com>`__:
 
-  - Enric Alomar
-  - Luis Rodríguez
+   -  Enric Alomar
+   -  Luis Rodríguez
 
 Other credits
 -------------
 
 The development of this module has been financially supported by:
 
-- Associacion Española de Odoo (`AEODOO <https://www.aeodoo.org/>`__)
+-  Associacion Española de Odoo (`AEODOO <https://www.aeodoo.org/>`__)
 
 The tones provided by default comes from Pixabay:
 
-- Ringback tone: Sound Effect by freesound_community from Pixabay
-- Call tone: Sound Effect by Jeremay Jimenez from Pixabay
-- Dial tone: Sound Effect by freesound_community from Pixabay
+-  Ringback tone: Sound Effect by freesound_community from Pixabay
+-  Call tone: Sound Effect by Jeremay Jimenez from Pixabay
+-  Dial tone: Sound Effect by freesound_community from Pixabay
 
 Maintainers
 -----------

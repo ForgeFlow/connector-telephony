@@ -45,7 +45,7 @@ export class VoipAgent {
                 onDisconnect: this._onDisconnect.bind(this),
             },
             logBuiltinEnabled: odoo.debug !== "",
-            logLevel: odoo.debug !== "" ? "debug" : "error",
+            logLevel: odoo.debug === "" ? "error" : "debug",
             transportOptions: {
                 server: this.voip.pbx_ws,
             },
