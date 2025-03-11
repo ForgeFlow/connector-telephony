@@ -27,11 +27,11 @@ class VoipOcaActivity(models.Model):
     @api.model
     def get_call_activities(self, _search, offset, limit):
         activity_type_id = self.env["mail.activity.type"].search(
-            [("category", "=", "phonecall")], limit=1
+            [("category", "=", "phonecall")]
         )
         domain = [
             ("user_id", "=", self.env.uid),
-            ("activity_type_id", "=", activity_type_id.id),
+            ("activity_type_id", "in", activity_type_id.ids),
             ("date_deadline", "<=", fields.Datetime.now()),
         ]
         if _search:

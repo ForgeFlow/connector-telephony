@@ -10,7 +10,7 @@ class VoipOcaCall(models.Model):
     _name = "voip.oca.call"
     _description = "Voip OCA Call"
 
-    phone_number = fields.Char(related="partner_id.phone", store=True)
+    phone_number = fields.Char(required=True)
     type_call = fields.Selection(
         [
             ("incoming", "Incoming"),
@@ -32,7 +32,7 @@ class VoipOcaCall(models.Model):
     )
     pbx_id = fields.Many2one("voip.oca.pbx", "PBX")
     end_date = fields.Datetime()
-    start_date = fields.Datetime(default=lambda r: fields.Datetime.now())
+    start_date = fields.Datetime()
     activity_name = fields.Char(
         help="The name of the activity related to this phone call, if any."
     )
@@ -45,7 +45,8 @@ class VoipOcaCall(models.Model):
     def _compute_display_name(self):
         states = dict(self._fields["state"].selection)
         for rec in self:
-            rec.display_name = f"{states[rec.state]} - {rec.partner_id.display_name}"
+            name = rec.partner_id.display_name or rec.phone_number
+            rec.display_name = f"{states[rec.state]} - {name}"
 
     def format_call(self):
         return {
@@ -59,10 +60,12 @@ class VoipOcaCall(models.Model):
             "startDate": self.start_date,
             "state": self.state,
             "duration": self.end_date
+            and self.start_date
             and self.format_time(self.end_date - self.start_date),
         }
 
     def format_time(self, duration):
+        # TODO: Fix this, as this is only working in english...
         duration_splited = str(duration).split(":")
         duration_formated = ""
 
@@ -84,7 +87,6 @@ class VoipOcaCall(models.Model):
         domain = [("user_id", "=", self.env.uid)]
         if _search:
             search_fields = [
-                "display_name",
                 "phone_number",
                 "partner_id.name",
                 "activity_name",
