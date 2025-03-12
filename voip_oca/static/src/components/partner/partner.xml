@@ -29,8 +29,8 @@
             </t>
             <span class="mt-2 small text-muted" t-if="props.call">
                 <i class="px-2" t-att-class="props.call.iconTypeCall" />
-                <t t-esc="props.call.startDate" />
-                <t t-if="props.call.duration"> • <t t-esc="props.call.duration" />
+                <t t-esc="props.call.dateStr" />
+                <t t-if="props.call.duration"> • <t t-esc="props.call.durationStr" />
                 </t>
             </span>
         </div>

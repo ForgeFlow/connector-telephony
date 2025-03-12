@@ -321,8 +321,6 @@ export class VoipAgent {
     }
     async _onCancelInvitation() {
         this.stopTone();
-        // Request Terminated
-        this.session.reject({statusCode: 487});
         this.voip.rejectCall();
         this.session = null;
     }
@@ -335,7 +333,6 @@ export class VoipAgent {
                 [this.voip.call.id],
             ])
         );
-        this.voip.call = false;
         this.voip.inCall = false;
         this.session = false;
     }

@@ -5,24 +5,11 @@
     This service will contain all the items necessary for the views
     of the voip widgets.
 */
+import {matchString} from "../utils/utils.esm";
 import {reactive} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {session} from "@web/session";
 import {url} from "@web/core/utils/urls";
-
-export function normalize(str) {
-    return str
-        .toLowerCase()
-        .replaceAll(/\p{Diacritic}/gu, "")
-        .normalize("NFD");
-}
-
-export function matchString(targetString, substring) {
-    if (!targetString) {
-        return false;
-    }
-    return normalize(targetString).includes(normalize(substring));
-}
 
 export class VoipOCA {
     constructor(env, services) {
@@ -120,13 +107,16 @@ export class VoipOCA {
     }
 
     get calls() {
-        return Object.values(this.store.Call.records).filter(
-            (call) =>
-                !this.searchValue ||
-                [call.phoneNumber, call.displayName].some((x) =>
-                    matchString(x, this.searchValue)
-                )
-        );
+        console.log("Gettings calls");
+        return Object.values(this.store.Call.records)
+            .filter(
+                (call) =>
+                    !this.searchValue ||
+                    [call.phoneNumber, call.displayName].some((x) =>
+                        matchString(x, this.searchValue)
+                    )
+            )
+            .sort((a, b) => b.date - a.date);
     }
     get partnerProps() {
         return {

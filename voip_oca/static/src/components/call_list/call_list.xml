@@ -11,8 +11,8 @@
                 <span class="fw-bold" t-esc="call.partner[1]" />
                 <span t-esc="call.displayName" />
                 <div class="small text-muted">
-                    <t t-esc="call.startDate" />
-                    <t t-if="call.duration"> • <t t-esc="call.duration" />
+                    <t t-esc="call.dateStr" />
+                    <t t-if="call.duration"> • <t t-esc="call.durationStr" />
                     </t>
                 </div>
             </div>

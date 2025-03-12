@@ -25,7 +25,7 @@
                 </span>
                 <span class="mt-2 small text-muted" t-if="voip.call">
                     <i class="px-2" t-att-class="voip.call.iconTypeCall" />
-                    <t t-esc="voip.call.startDate" />
+                    <t t-esc="voip.call.dateStr" />
                 </span>
                 <span class="mt-2 small">
                     In call for: <t t-esc="duration" />

@@ -1,6 +1,8 @@
 /* @odoo-module */
 
 import {Record} from "@mail/core/common/record";
+import {deserializeDateTime} from "@web/core/l10n/dates";
+import {durationStr} from "../../utils/utils.esm";
 
 /**
  * @typedef Data
@@ -27,13 +29,66 @@ export class Call extends Record {
         return super.get(data);
     }
     /**
-     * @param {Data} data
-     * @param {Object} [param1]
-     * @param {boolean} param1.broadcast
      * @returns {import("models").Call|import("models").Call[]}
      */
     static insert() {
         return super.insert(...arguments);
+    }
+    /**
+     * Deserialize the data and update the record.
+     * @param {Data} data
+     */
+    update(data) {
+        super.update(...arguments);
+        if (data.createDate) {
+            this.createDate = deserializeDateTime(data.createDate);
+        }
+        if (data.startDate) {
+            this.startDate = deserializeDateTime(data.startDate);
+        }
+        if (data.endDate) {
+            this.endDate = deserializeDateTime(data.endDate);
+        }
+    }
+    /**
+     * Date of the call to show
+     * @returns {Date}
+     */
+    get date() {
+        if (this.startDate) {
+            return this.startDate;
+        }
+        return this.createDate;
+    }
+    /**
+     * Date of the call to show
+     * @returns {String}
+     */
+    get dateStr() {
+        return this.date.toLocaleString(luxon.DateTime.DATETIME_SHORT);
+    }
+    get iconTypeCall() {
+        if (this.typeCall === "incoming") {
+            return "fa fa-arrow-down";
+        }
+        return "fa fa-arrow-up";
+    }
+    /**
+     * Duration of the call in seconds.
+     * @returns {Number}
+     */
+    get duration() {
+        if (!this.startDate || !this.endDate) {
+            return 0;
+        }
+        return (this.endDate - this.startDate) / 1000;
+    }
+    /**
+     * String translation of the duration of the call.
+     * @returns {String}
+     */
+    get durationStr() {
+        return durationStr(this.duration);
     }
 }
 

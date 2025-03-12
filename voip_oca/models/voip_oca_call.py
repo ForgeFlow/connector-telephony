@@ -58,29 +58,9 @@ class VoipOcaCall(models.Model):
             "partner": self.partner_id and self.partner_id.format_partner(),
             "phoneNumber": self.phone_number,
             "startDate": self.start_date,
+            "createDate": self.create_date,
             "state": self.state,
-            "duration": self.end_date
-            and self.start_date
-            and self.format_time(self.end_date - self.start_date),
         }
-
-    def format_time(self, duration):
-        # TODO: Fix this, as this is only working in english...
-        duration_splited = str(duration).split(":")
-        duration_formated = ""
-
-        if duration_splited[0] != "0":
-            duration_formated += f"{duration_splited[0]} hours "
-        if duration_splited[1] != "00":
-            duration_formated += f"""{duration_splited[1][1:]
-            if duration_splited[1].startswith("0")
-            else duration_splited[1]} minutes """
-        if duration_splited[2] != "00":
-            duration_formated += f"""{duration_splited[2][1:]
-            if duration_splited[1].startswith("0")
-            else duration_splited[1]} seconds """
-
-        return duration_formated
 
     @api.model
     def get_recent_calls(self, _search, offset, limit):
