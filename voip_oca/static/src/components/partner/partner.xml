@@ -55,6 +55,12 @@
                     t-on-click="onOpenPartnerClick"
                 ><i class="fa fa-fw fa-lg fa-user" /></button>
                 <button
+                    t-if="!this.props.partner.id"
+                    class="btn btn-secondary p-3 rounded-circle"
+                    title="New contact"
+                    t-on-click="onNewPartnerClick"
+                ><i class="fa fa-fw fa-lg fa-plus" /></button>
+                <button
                     class="btn btn-secondary p-3 rounded-circle"
                     title="Schedule activity"
                     t-on-click="onScheduleActivity"

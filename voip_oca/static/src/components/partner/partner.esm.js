@@ -74,6 +74,17 @@ export class Partner extends Component {
             target: "new",
         });
     }
+    onNewPartnerClick() {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "res.partner",
+            views: [[false, "form"]],
+            target: "new",
+            context: {
+                default_phone: this.phoneNumber,
+            },
+        });
+    }
     onScheduleActivity() {
         this.action.doAction({
             type: "ir.actions.act_window",
