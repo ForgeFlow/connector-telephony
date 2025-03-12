@@ -241,6 +241,8 @@ export class VoipAgent {
         }
     }
     async call({number, partner}) {
+        this.voip.isOpened = true;
+        this.voip.isFolded = false;
         var phone_number = number;
         if (!number && partner) {
             phone_number = partner.mobileNumber || partner.landlineNumber;
