@@ -36,8 +36,8 @@ patch(MockServer.prototype, {
                 res.partner_id && this._mockResPartner_FormatPartner([res.partner_id]),
             phoneNumber: res.phone_number,
             startDate: res.start_date,
+            createDate: res.create_date,
             state: res.state,
-            duration: res.end_date && res.end_date - res.start_date,
         };
     },
     _mockVoipOcaCall_GetRecentCalls() {

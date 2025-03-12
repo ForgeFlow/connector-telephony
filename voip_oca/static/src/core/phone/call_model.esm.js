@@ -22,14 +22,17 @@ import {durationStr} from "../../utils/utils.esm";
 
 export class Call extends Record {
     static id = "id";
-    /** @type {Object.<number, import("models").Call>} */
+    /** @type {Object.<number, Call>} */
     static records = {};
-    /** @returns {import("models").Call} */
+    /**
+     * @param {Data} data
+     * @returns {Call}
+     * */
     static get(data) {
         return super.get(data);
     }
     /**
-     * @returns {import("models").Call|import("models").Call[]}
+     * @returns {Call|Call[]}
      */
     static insert() {
         return super.insert(...arguments);

@@ -42,6 +42,7 @@ QUnit.test("Check Call", async () => {
             user_id: pyEnv.currentUserId,
             start_date: "2016-12-11 05:15:00",
             end_date: "2016-12-11 05:30:00",
+            create_date: "2016-12-11 05:15:00",
         },
         {
             name: "Other Test Partner",
@@ -52,6 +53,7 @@ QUnit.test("Check Call", async () => {
             user_id: pyEnv.currentUserId,
             start_date: "2016-12-11 05:15:00",
             end_date: "2016-12-11 05:30:00",
+            create_date: "2016-12-11 05:15:00",
         },
     ]);
     start();
