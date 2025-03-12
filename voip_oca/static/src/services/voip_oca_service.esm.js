@@ -29,6 +29,7 @@ export class VoipOCA {
         /* Store voip data in the service, not the session */
         Object.assign(this, session.voip);
         delete session.voip;
+        this.status = "disconnected";
         this.selectedTab = "activity_list";
         this.uid = session.uid;
         this.store = services["mail.store"];

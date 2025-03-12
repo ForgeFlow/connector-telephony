@@ -6,6 +6,18 @@
 
     .o_voip_softphone_header {
         background-color: $o-community-color !important;
+        .o_voip_status_icon {
+            color: $o-info;
+            &.o_voip_connected {
+                color: $o-success !important;
+            }
+            &.o_voip_disconnected {
+                color: $o-danger !important;
+            }
+            &.o_voip_connecting {
+                color: $o-warning !important;
+            }
+        }
     }
 
     .o_voip_softphone_content {

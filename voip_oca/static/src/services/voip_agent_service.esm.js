@@ -60,6 +60,7 @@ export class VoipAgent {
             console.info("Voip agent is not available in non-production mode");
             return;
         }
+        this.voip.status = "connecting";
         if (!this.hasRtcSupport) {
             console.info("Voip agent is not available in this browser");
             return;
@@ -95,8 +96,10 @@ export class VoipAgent {
                     onReject: this._onRegistererRejected.bind(this),
                 },
             });
+            this.voip.status = "connected";
         } catch (error) {
             console.error(error);
+            this.voip.status = "disconnected";
             this.notification.add(
                 _t(
                     "An error occurred during the instantiation of the User Agent:\n\n%(error)s",
@@ -114,6 +117,7 @@ export class VoipAgent {
             this.notification.add(
                 _t("Failed to reconnect the User Agent. Please reload the page.")
             );
+            this.voip.status = "disconnected";
             return;
         }
         if (this.reconnectingAgent) {
@@ -123,6 +127,8 @@ export class VoipAgent {
         try {
             await this.agent.reconnect();
             this.registerer.register();
+
+            this.voip.status = "connected";
         } catch {
             // Reconnect immediately if the connection fails, then 5 seconds, then 25, 125, 625
             setTimeout(() => this.reconnectAgent(attempt + 1), 5 ** attempt * 1000);
@@ -178,6 +184,8 @@ export class VoipAgent {
                 error: error.message,
             })
         );
+
+        this.voip.status = "connecting";
         this.reconnectAgent();
     }
     _onSessionStateChange(newState) {
